@@ -75,27 +75,14 @@ namespace AI
 
         public static void Generate(int N, string initialState)
         {
-            //Console.WriteLine(initialState);
-            //if (!found)
-            //{
-                st.Push(initialState);
-            //}
-            
-            /*if (!found && st.Count > 1)
-            {
-                st.Pop();
-            }*/
+            st.Push(initialState);
             if (initialState == GenerateState(N, '<', '>'))
             {
-                //Console.WriteLine(currentState);
                 found = true;
-                //return;
             }
-
             List<string> nextstates = GenerateNextStates(initialState);
             foreach (var state in nextstates)
             {
-                //Console.WriteLine(state);
                 Generate(N, state);
                 if (!found)
                 {
@@ -105,96 +92,7 @@ namespace AI
                 {
                     return;
                 }
-                //Console.WriteLine(state);
             }
-            //Console.WriteLine(currentState);
-        }
-
-        public static void Generate4(int N, string initialState)
-        {
-            //Console.WriteLine(initialState);
-            //if (!found)
-            //{
-            st.Push(initialState);
-            //}
-
-            /*if (!found && st.Count > 1)
-            {
-                st.Pop();
-            }*/
-            if (initialState == GenerateState(N, '<', '>'))
-            {
-                //Console.WriteLine(currentState);
-                found = true;
-                return;
-            }
-
-            List<string> nextstates = GenerateNextStates(initialState);
-            foreach (var state in nextstates)
-            {
-                //Console.WriteLine(state);
-                Generate4(N, state);
-                if (!found)
-                {
-                    st.Pop();
-                }
-                else
-                {
-                    return;
-                }
-                //Console.WriteLine(state);
-            }
-            //Console.WriteLine(currentState);
-        }
-
-        public static void Generate2(int N, string initialState)
-        {
-            //string currentState = initialState;
-            Console.WriteLine(initialState);
-            
-            if (initialState == GenerateState(N, '<', '>'))
-            {
-                //Console.WriteLine(currentState);
-                return;
-            }
-            List<string> nextstates = GenerateNextStates(initialState);
-            foreach (var state in nextstates)
-            {
-                //Console.WriteLine(state);
-                Generate2(N, state);
-                //Console.WriteLine(state);
-            }
-            //Console.WriteLine(currentState);
-        }
-
-        public static void Generate3(int N, string initialState)
-        {
-            Console.WriteLine(initialState);
-
-            st.Push(initialState);
-            /*if (!found && st.Count > 1)
-            {
-                st.Pop();
-            }*/
-            if (initialState == GenerateState(N, '<', '>'))
-            {
-                //Console.WriteLine(currentState);
-                found = true;
-                return;
-            }
-
-            List<string> nextstates = GenerateNextStates(initialState);
-            foreach (var state in nextstates)
-            {
-                //Console.WriteLine(state);
-                Generate3(N, state);
-                if (!found)
-                {
-                    st.Pop();
-                }
-                //Console.WriteLine(state);
-            }
-            //Console.WriteLine(currentState);
         }
 
         public static Stack<string> Reverse(Stack<string> st)
@@ -209,7 +107,7 @@ namespace AI
 
         static void Main(string[] args)
         {
-            int N = 2;
+            int N = int.Parse(Console.ReadLine());
             string initialState = GenerateState(N, '>', '<');
             Generate(N, initialState);
             st = Reverse(st);

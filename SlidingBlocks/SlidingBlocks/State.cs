@@ -130,6 +130,7 @@ namespace SlidingBlocks
             }
         }
 
+
         public int CompareTo(State other)
         {
             if (this.f() < other.f())

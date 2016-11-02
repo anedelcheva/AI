@@ -93,7 +93,35 @@ namespace SlidingBlocks
             return boardInArray;
         }
 
+        public static bool IsMovementLeft(State state1, State state2)
+        {
+            if (state2.BlankIdx - state1.BlankIdx == 1)
+                return true;
+            return false;
+        }
 
+        public static bool IsMovementRight(State state1, State state2)
+        {
+            if (state2.BlankIdx - state1.BlankIdx == -1)
+                return true;
+            return false;
+        }
+
+        public static bool IsMovementUp(State state1, State state2)
+        {
+            int dim = (int)Math.Sqrt(state1.CurrentState.Length);
+            if (state2.BlankIdx - state1.BlankIdx == dim)
+                return true;
+            return false;
+        }
+
+        public static bool IsMovementDown(State state1, State state2)
+        {
+            int dim = (int)Math.Sqrt(state1.CurrentState.Length);
+            if (state2.BlankIdx - state1.BlankIdx == -dim)
+                return true;
+            return false;
+        }
 
         public bool Equals(State x, State y)
         {
@@ -123,6 +151,27 @@ namespace SlidingBlocks
             return array;
         }
 
+
+        public static void PrintMoves(State state1, State state2)
+        {
+            if (IsMovementUp(state1, state2))
+            {
+                Console.WriteLine("up");
+            }
+            else if (IsMovementDown(state1, state2))
+            {
+                Console.WriteLine("down");
+            }
+            else if (IsMovementLeft(state1, state2))
+            {
+                Console.WriteLine("left");
+            }
+            else if (IsMovementRight(state1, state2))
+            {
+                Console.WriteLine("right");
+            }
+        }
+
         public static void PrintArray(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
@@ -145,6 +194,14 @@ namespace SlidingBlocks
 
         public static void Main()
         {
+
+            /*State state1 = new State(new int[] { 1, 2, 3, 0, 5, 6, 4, 7, 8 });
+            State state2 = new State(new int[] { 2, 3, 6, 5, 0, 6, 4, 7, 8 });
+
+            Console.WriteLine(IsMovementDown(state1, state2));
+            Console.WriteLine(IsMovementUp(state1, state2));
+            Console.WriteLine(IsMovementLeft(state1, state2));
+            Console.WriteLine(IsMovementRight(state1, state2));*/
             int N = int.Parse(Console.ReadLine()); // the number of elements in the matrix
             // dimension of a matrix with N+1 number of elements, +1 because of the blank 
             int dim = (int)Math.Sqrt((double)N + 1);
@@ -158,13 +215,16 @@ namespace SlidingBlocks
             {
                 board.AStarSolve();
                 Console.WriteLine(movesNumber);
+                State state1 = moves.Dequeue();
+                State state2 = moves.Dequeue();
                 while (moves.Count > 0)
                 {
-                    PrintMatrix(ConvertArrayToMatrix(moves.Dequeue().CurrentState));
+                    PrintMoves(state1, state2);
+                    state1 = state2;
+                    state2 = moves.Dequeue();
+                    //PrintMatrix(ConvertArrayToMatrix(moves.Dequeue().CurrentState));
                 }
             }
-
-            //PrintArray(arr);
         }
     }
 }

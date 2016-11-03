@@ -2,11 +2,10 @@
 
 namespace SlidingBlocks
 {
-    class Move
+    static class Move
     {
-        private Move() { }
-
         #region Methods
+
         public static State Up(State state)
         {
             int dim = (int)Math.Sqrt(state.CurrentState.Length);
@@ -37,7 +36,8 @@ namespace SlidingBlocks
             if (state.BlankIdx % dim > 0)
                 return new State(state, state.BlankIdx - 1);
             return null;
-        } 
+        }
+
         #endregion
     }
 }

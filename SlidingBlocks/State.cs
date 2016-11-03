@@ -2,52 +2,60 @@
 
 namespace SlidingBlocks
 {
-    class State : IComparable<State>
+    public class State : IComparable<State>
     {
         #region Fields
+
         private int[] currentState;
         private State previousState;
         private int blankIdx; // the index of 0 in the current state
-        private int g; // cost
-        private int h; // heuristics
+
         #endregion
 
         #region Properties
+
         public int[] CurrentState { get { return currentState; } }
         public State PreviousState { get { return previousState; } }
         public int BlankIdx { get { return blankIdx; } }
-        public int G { get { return g; } }
-        public int H { get { return h; } }
+
+        private int cost; // cost
+        private int heuristics; // heuristics
+
+        public int Cost => cost;
+
+        public int Heuristics => heuristics;
+
         #endregion
 
         #region Constructors
+
         public State(int[] state)
         {
             this.currentState = state;
             this.previousState = null;
-            this.g = 0;
+            this.cost = 0;
             this.blankIdx = Array.IndexOf(currentState, 0);
-            this.h = ComputeHeuristics(this.currentState);
+            this.heuristics = ComputeHeuristics(this.currentState);
         }
 
         public State(State previousState, int blankIdx)
         {
             this.currentState = new int[previousState.currentState.Length];
             Array.Copy(previousState.currentState, this.currentState, this.currentState.Length);
-            //this.currentState = previousState.currentState;
             this.currentState = this.currentState.Swap(previousState.blankIdx, blankIdx);
             this.blankIdx = blankIdx;
-            this.g = previousState.g + 1;
-            this.h = ComputeHeuristics(this.currentState);
+            this.cost = previousState.cost + 1;
+            this.heuristics = ComputeHeuristics(this.currentState);
             this.previousState = previousState;
         }
+
         #endregion
 
         #region Methods
 
-        public int f()
+        public int TotalCost()
         {
-            return this.h + this.g;
+            return this.heuristics + this.cost;
         }
 
         public bool IsFinalState()
@@ -62,15 +70,9 @@ namespace SlidingBlocks
         {
             int inversions = 0;
             for (int i = 0; i < matrixInArray.Length - 1; i++)
-            {
                 for (int j = i + 1; j < matrixInArray.Length; j++)
-                {
                     if (matrixInArray[i] > matrixInArray[j])
-                    {
                         inversions++;
-                    }
-                }
-            }
             // we remove number of inversions of elements prior to 0
             inversions -= Array.IndexOf(matrixInArray, 0);
             return inversions;
@@ -112,6 +114,7 @@ namespace SlidingBlocks
             return Math.Abs(correctRow - numberRow) + Math.Abs(correctColumn - numberColumn);
         }
 
+        // computes heuristics for all numbers of an array representing a board
         private static int ComputeHeuristics(int[] state)
         {
             int h = 0;
@@ -122,33 +125,11 @@ namespace SlidingBlocks
             return h;
         }
 
-        public static void PrintState(int[] state)
-        {
-            for (int i = 0; i < state.Length; i++)
-            {
-                Console.WriteLine(state[i]);
-            }
-        }
-
-
         public int CompareTo(State other)
         {
-            if (this.f() < other.f())
-                return -1;
-            else if (this.f() == other.f())
-                return 0;
-            else
-                return 1;
+            return this.TotalCost().CompareTo(other.TotalCost());
         }
-        #endregion
 
-        /*public static void Main()
-        {
-            int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-            State state = new State(arr);
-            State state2 = Move.Down(state);
-            state2 = Move.Down(state2);
-            PrintState(state2.CurrentState);
-        }*/
+        #endregion
     }
 }

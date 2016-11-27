@@ -5,7 +5,7 @@
  N < 10 000
 
  Вход:
- <ul style="list-style-type: none">
+ <ul style="list-style-type: none;">
  <li>M</li>
  <li>N брой предмета</li>
  <li>p брой индивиди</li>

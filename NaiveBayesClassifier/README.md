@@ -1,9 +1,9 @@
 # Домашно 7
 Реализирайте Наивен Бейсов Класификатор, класифициращ индивидите като демократи или републиканци, използвайки 16-те атрибута и двата класа от следните данни: 
 
-![dataset link1](http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records)
+[http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records](http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records)
 
-(други източници : ![dataset link2](http://repository.seasr.org/Datasets/UCI/arff/vote.arff))
+(други източници : [http://archive.ics.uci.edu/ml/datasets/Congressional+Voting+Records](http://repository.seasr.org/Datasets/UCI/arff/vote.arff))
 
 За тестване на алгоритъма приложете 10-fold крос-валидация (разделете данните по случаен начин на 10 множества и направете 10 обучения и тествания на модела като всеки път използвате едно от множествата за тестване, а останалите 9 за обучение).
 
